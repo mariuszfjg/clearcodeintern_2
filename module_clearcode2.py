@@ -1,7 +1,10 @@
+#gettin all maps/matrixes from file
+#and putting it into dictionary
 def get_maps(sourcename):
-    lines = open(sourcename,'r').read().split('\n')
+    map_source = open(sourcename,'r')
+    lines = map_source.read().split('\n')
     l_cours = 0 #init line coursor
-    m_size = int(lines[l_cours]) #actual matrix size
+    m_size = int(lines[l_cours]) #actual matrix/map size
     dict_counter = 1
     fileDict = {}
 
@@ -9,7 +12,8 @@ def get_maps(sourcename):
         values = []
         for i in range(l_cours,l_cours+m_size):
             values.append(lines[i+1].split(','))
-        fileDict[str(dict_counter)] = values
+        map_name = str(dict_counter)+'_'+str(m_size) #name of map - No._size
+        fileDict[map_name] = values
 
         dict_counter+=1
         l_cours+=(m_size+1)
@@ -23,4 +27,20 @@ def get_maps(sourcename):
             print('')
             break
 
+    map_source.close()
     return fileDict
+#changing all values from string to int in dictionary
+#containing maps
+def change_values_to_int(inputDict):
+    for i in inputDict.keys():
+        for j in range(0,len(inputDict[i])):
+            for k in range(0,len(inputDict[i][j])):
+                inputDict[i][j][k]=int(inputDict[i][j][k])
+    return inputDict
+#initializing list where minimal effort will be stored
+def init_effort(list_len):
+    effort_list = []
+    for i in range (0,list_len):
+        effort_list.append(0)
+
+    return effort_list
